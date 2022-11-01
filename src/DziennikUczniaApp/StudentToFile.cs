@@ -23,7 +23,7 @@ namespace DziennikUczniaApp
         {
             if(CheckGradeRange (grade))
             {
-                using(var writer = File.AppendText(fileName)
+                using(var writer = File.AppendText(fileName))
                 {
                 writer.WriteLine(grade);
                 }
@@ -42,7 +42,7 @@ namespace DziennikUczniaApp
         {
         if (int.TryParse(grade, out var number) && (CheckGradeRange(number)))
         {
-            using(var writer = File.AppendText(fileName)
+            using(var writer = File.AppendText(fileName))
                 {
                 writer.WriteLine(grade);
                 }
@@ -57,7 +57,7 @@ namespace DziennikUczniaApp
             {
             case "1+":
                 this.grades.Add(1.5);
-                using(var writer = File.AppendText($"{Surname}{Name}.txt"))
+                using(var writer = File.AppendText(fileName))
                 {
                 writer.WriteLine("1.5");
                 }
@@ -65,7 +65,7 @@ namespace DziennikUczniaApp
                 break;
             case "2-":
                 this.grades.Add(1.75);
-                using(var writer = File.AppendText($"{Surname}{Name}.txt"))
+                using(var writer = File.AppendText(fileName))
                 {
                 writer.WriteLine("1.75");
                 }
@@ -73,38 +73,66 @@ namespace DziennikUczniaApp
                 break;
             case "2+":
                 this.grades.Add(2.5);
-                using(var writer = File.AppendText($"{Surname}{Name}.txt)"))
+                using(var writer = File.AppendText(fileName))
                 {
-                writer.WriteLine("1.5");
+                writer.WriteLine("2.5");
                 }
                 GradeAdded(this, new EventArgs());
                 break;
             case "3-":
                 this.grades.Add(2.75);
+                using(var writer = File.AppendText(fileName))
+                {
+                writer.WriteLine("2.75");
+                }
                 GradeAdded(this, new EventArgs());
                 break;
             case "3+":
                 this.grades.Add(3.5);
+                using(var writer = File.AppendText(fileName))
+                {
+                writer.WriteLine("3.5");
+                }
                 GradeAdded(this, new EventArgs());
                 break;
             case "4-":
                 this.grades.Add(3.75);
+                using(var writer = File.AppendText(fileName))
+                {
+                writer.WriteLine("3.75");
+                }
                 GradeAdded(this, new EventArgs());
                 break;
             case "4+":
                 this.grades.Add(4.5);
+                using(var writer = File.AppendText(fileName))
+                {
+                writer.WriteLine("4.5");
+                }
                 GradeAdded(this, new EventArgs());
                 break;
             case "5-":
                 this.grades.Add(4.75);
+                using(var writer = File.AppendText(fileName))
+                {
+                writer.WriteLine("4.75");
+                }
                 GradeAdded(this, new EventArgs());
                 break;
             case "5+":
                 this.grades.Add(5.5);
+                using(var writer = File.AppendText(fileName))
+                {
+                writer.WriteLine("5.5");
+                }
                 GradeAdded(this, new EventArgs());
                 break;
             case "6-":
                 this.grades.Add(5.75);
+                using(var writer = File.AppendText(fileName))
+                {
+                writer.WriteLine("5.75");
+                }
                 GradeAdded(this, new EventArgs());
                 break;
             default:
