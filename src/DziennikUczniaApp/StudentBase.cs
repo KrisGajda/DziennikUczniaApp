@@ -13,7 +13,7 @@ namespace DziennikUczniaApp
             bool CheckCharacters(string Name);
             string Name {get; set;}
             string Surname {get; set;}
-            //event GradeAddedDelegate GradeAdded;
+            string FileWithGrades(string surname, string name);            
         }
     public abstract class StudentBase : Person, IStudentBase
     {
@@ -24,9 +24,8 @@ namespace DziennikUczniaApp
         public StudentBase(string name, string surname) : base(name, surname)
         {   
         }
-         
-        public abstract void AddGrade(int grade);
         public abstract void AddGrade(string grade);
+        public abstract void AddGrade(int grade);
 
         public virtual bool CheckCharacters(string Name)
         {
@@ -49,7 +48,7 @@ namespace DziennikUczniaApp
         public virtual bool CheckGradeRange(double grade)
         {
             // Checking range: 0 - 100
-            if(grade >=0 && grade<=100)
+            if(grade >= 0 && grade <= 100)
                 return true;
             else
                 throw new ArgumentException($"Invalid argument: {nameof(grade)}. Grade out of range (0-100).");

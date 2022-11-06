@@ -9,21 +9,20 @@ namespace DziennikUczniaApp
         public override event GradeAddedDelegate BadGradeAdded;
         
         public StudentToFile(string name, string surname) : base(name, surname)
-        {
-            
+        {            
         }
-        public const string fileName = ($"{Surname}{Name}.txt");
-        // public string CreateTxtFileName(string firstWord, string secondWord)
-        // {
-        //     string newString = $"{firstWord}{secondWord}.txt";
-        //     return newString;
-        // }
-        // public const string fileName = new CreateTxtFileName(Surname, Name);
+        public override string FileWithGrades(string Surname, string Name)
+        {
+            return ($"{Surname}{Name}.txt");
+        }
+        public const string auditFile = "audit.txt";
+        
         public override void AddGrade(int grade)
         {
+            
             if(CheckGradeRange (grade))
             {
-                using(var writer = File.AppendText(fileName))
+                using(var writer = File.AppendText(FileWithGrades(Surname, Name)))
                 {
                 writer.WriteLine(grade);
                 }
@@ -37,19 +36,12 @@ namespace DziennikUczniaApp
                 throw new ArgumentException($"Invalid argument: {nameof(grade)}. Grade not added.");
             }
         }
-
+        
         public override void AddGrade(string grade)
         {
         if (int.TryParse(grade, out var number) && (CheckGradeRange(number)))
         {
-            using(var writer = File.AppendText(fileName))
-                {
-                writer.WriteLine(grade);
-                }
-            if(GradeAdded != null)
-            {
-            GradeAdded(this, new EventArgs());
-            }
+            CreateFilesWithGrades(grade);
         }
         else if (grade.Contains('+') || grade.Contains('-'))
         {
@@ -57,83 +49,43 @@ namespace DziennikUczniaApp
             {
             case "1+":
                 this.grades.Add(1.5);
-                using(var writer = File.AppendText(fileName))
-                {
-                writer.WriteLine("1.5");
-                }
-                GradeAdded(this, new EventArgs());
+                CreateFilesWithGrades(grade);
                 break;
             case "2-":
                 this.grades.Add(1.75);
-                using(var writer = File.AppendText(fileName))
-                {
-                writer.WriteLine("1.75");
-                }
-                GradeAdded(this, new EventArgs());
+                CreateFilesWithGrades(grade);
                 break;
             case "2+":
                 this.grades.Add(2.5);
-                using(var writer = File.AppendText(fileName))
-                {
-                writer.WriteLine("2.5");
-                }
-                GradeAdded(this, new EventArgs());
+                CreateFilesWithGrades(grade);
                 break;
             case "3-":
                 this.grades.Add(2.75);
-                using(var writer = File.AppendText(fileName))
-                {
-                writer.WriteLine("2.75");
-                }
-                GradeAdded(this, new EventArgs());
+                CreateFilesWithGrades(grade);
                 break;
             case "3+":
                 this.grades.Add(3.5);
-                using(var writer = File.AppendText(fileName))
-                {
-                writer.WriteLine("3.5");
-                }
-                GradeAdded(this, new EventArgs());
+                CreateFilesWithGrades(grade);
                 break;
             case "4-":
                 this.grades.Add(3.75);
-                using(var writer = File.AppendText(fileName))
-                {
-                writer.WriteLine("3.75");
-                }
-                GradeAdded(this, new EventArgs());
+                CreateFilesWithGrades(grade);
                 break;
             case "4+":
                 this.grades.Add(4.5);
-                using(var writer = File.AppendText(fileName))
-                {
-                writer.WriteLine("4.5");
-                }
-                GradeAdded(this, new EventArgs());
+                CreateFilesWithGrades(grade);
                 break;
             case "5-":
                 this.grades.Add(4.75);
-                using(var writer = File.AppendText(fileName))
-                {
-                writer.WriteLine("4.75");
-                }
-                GradeAdded(this, new EventArgs());
+                CreateFilesWithGrades(grade);
                 break;
             case "5+":
                 this.grades.Add(5.5);
-                using(var writer = File.AppendText(fileName))
-                {
-                writer.WriteLine("5.5");
-                }
-                GradeAdded(this, new EventArgs());
+                CreateFilesWithGrades(grade);
                 break;
             case "6-":
                 this.grades.Add(5.75);
-                using(var writer = File.AppendText(fileName))
-                {
-                writer.WriteLine("5.75");
-                }
-                GradeAdded(this, new EventArgs());
+                CreateFilesWithGrades(grade);
                 break;
             default:
                 Console.WriteLine($"Invalid argument: {nameof(grade)}. Grade not added.");
@@ -144,6 +96,30 @@ namespace DziennikUczniaApp
         {
             throw new ArgumentException($"Invalid argument: {nameof(grade)}. Grade not added.");
         }
+        }
+
+        private void CreateFilesWithGrades(string grade)
+        {
+            using (var writer = File.AppendText(FileWithGrades(Surname, Name)))
+            {
+                writer.WriteLine(grade);
+            }
+            using (var auditWriter = File.AppendText(auditFile))
+            {
+                auditWriter.WriteLine($"{grade}\t{DateTime.UtcNow}");
+            }
+            if(GradeAdded != null)
+            {
+            GradeAdded(this, new EventArgs());
+            }
+        }
+
+        public override bool CheckGradeRange(double grade)
+        {
+            if(grade >=1 && grade<=6)
+                return true;
+            else
+                throw new ArgumentException($"Invalid argument: {nameof(grade)}. Grade out of range (1-6).");  
         }       
     }
 }

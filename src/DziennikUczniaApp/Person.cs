@@ -40,5 +40,10 @@ namespace DziennikUczniaApp
                 }
             }
         }
+        public virtual string FileWithGrades(string Surname, string Name)
+        {
+        return ($"{Surname}{Name}.txt");
+        }
+        
     }
 }

@@ -5,7 +5,6 @@ namespace DziennikUczniaApp
 {
     public class StudentToMemory : StudentBase, IStudentBase
      {
-        //public delegate void GradeAddedDelegate(object sender, EventArgs args);
         public override event GradeAddedDelegate GradeAdded;
         public override event GradeAddedDelegate BadGradeAdded;
         public StudentToMemory(string name, string surname) : base(name, surname)
